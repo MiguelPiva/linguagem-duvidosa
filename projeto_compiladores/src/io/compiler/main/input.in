@@ -1,0 +1,26 @@
+inicioprog testando
+    declare numero_inte: a, b, c;
+    declare numero_flut: d;
+    declare seq_caracteres: textao;
+    leia(a);
+    leia(b);
+
+    escreva("Hello World!");
+    se (a > 5)
+    entao
+        escreva("a eh maior que 5");
+    senao
+        escreva("a nao eh maior que 5");
+    es
+    
+    enquanto (a < 10)
+    execute
+        escreva(a);
+        a := a + 1;
+    pronto
+
+    c := a + b;
+    leia(textao);
+    d := 2 + 3.14 - 5 * 8 / a - b * c;
+
+fimprog
