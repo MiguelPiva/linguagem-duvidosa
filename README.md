@@ -2,7 +2,7 @@
 
 Para o ANTLR gerar os arquivos:
 ``` 
-java -cp .\antlr-4.13.2-complete.jar org.antlr.v4.Tool Duvidosa.g4 -o ./src/io/compiler/core -package io.compiler.cor
+java -cp ./projeto_compiladores/antlr-4.13.2-complete.jar org.antlr.v4.Tool ./projeto_compiladores/Duvidosa.g4 -o ./projeto_compiladores/src/io/compiler/core -package io.compiler.core 
 ```
 
 
