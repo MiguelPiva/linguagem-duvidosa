@@ -22,7 +22,6 @@ grammar Duvidosa;
     private WhileCommand currentWhileCommand;
 
 
-
     public void updateType() {
         for (Var var : currentDeclaration) {
             var.setType(currentType);
@@ -65,7 +64,7 @@ programa    : 'inicioprog'
             ;
 
 
-instrucoes  : ( declaravar | espr | comando )
+instrucoes  : ( declaravar | espr | comando | comentario )
             ;
 
 
@@ -132,17 +131,21 @@ comando     : cmdAtribu
 
 
 cmdAtribu   : ID { if (!isDeclared(_input.LT(-1).getText())) {
-                    throw new DuvidosoSemanticException("Variável não declarada: " + _input.LT(-1).getText());}
+                    throw new DuvidosoSemanticException("Variável não declarada: " + _input.LT(-1).getText());
+                    }
                     symbolTable.get(_input.LT(-1).getText()).setInitialized(true);
                     leftType = symbolTable.get(_input.LT(-1).getText()).getType();
+                    AttributionCommand cmdAttrib = new AttributionCommand(symbolTable.get(_input.LT(-1).getText()).getId());
+                    strExpr = "";
                 }
               OP_ATRIB 
-              espr 
+              espr { cmdAttrib.setContent(strExpr); }
               PVIRG
               { 
                 if (leftType.getValue() < rightType.getValue()) {
                     throw new DuvidosoSemanticException("Tipos incompatíveis: " + leftType + " e " + rightType);
                 }
+                stack.peek().add(cmdAttrib); 
               }
             ;
             
@@ -206,6 +209,7 @@ cmdEnquanto : 'enquanto' {
                 'pronto' { stack.peek().add(currentWhileCommand); }
             ;
 
+
 comentario  : '#' TEXTO '##'
             ;
 
@@ -241,8 +245,10 @@ PVIRG       : ';'
 DOISP       : ':'
             ;
 
+
 ASPAS       : '"'
             ;
+
 
 AB_PAREN    : '('
             ;
