@@ -1,0 +1,10 @@
+# VS code
+.vscode/*
+duvidosacompiler/.vscode/*
+
+# Arquivos gerados pelo ANTLR
+duvidosacompiler/src/main/java/com/gthc/duvidosacompiler/core/Duvidosa*
+duvidosacompiler/.antlr/*
+
+# Arquivos do Java
+duvidosacompiler/bin/*

@@ -1,4 +1,4 @@
-package io.compiler.types;
+package com.gthc.duvidosacompiler.types;
 
 public enum Types {
     numero_inte(1),

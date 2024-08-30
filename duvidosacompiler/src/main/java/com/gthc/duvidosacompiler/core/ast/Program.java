@@ -1,10 +1,10 @@
-package io.compiler.core.ast;
+package com.gthc.duvidosacompiler.core.ast;
 
 import java.util.HashMap;
 import java.util.List;
 
-import io.compiler.types.Types;
-import io.compiler.types.Var;
+import com.gthc.duvidosacompiler.types.Types;
+import com.gthc.duvidosacompiler.types.Var;
 
 public class Program {
     private String name;

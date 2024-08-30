@@ -1,4 +1,4 @@
-package io.compiler.core.ast;
+package com.gthc.duvidosacompiler.core.ast;
 
 public class AttributionCommand extends Command {
     private String varName;

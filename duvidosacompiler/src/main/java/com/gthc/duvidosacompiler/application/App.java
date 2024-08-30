@@ -1,6 +1,7 @@
-package io.compiler.main;
+package com.gthc.duvidosacompiler.application;
 
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,17 +10,17 @@ import java.io.PrintWriter;
 
 import org.antlr.v4.runtime.CharStreams;
 
-import io.compiler.core.DuvidosaLexer;
-import io.compiler.core.DuvidosaParser;
-import io.compiler.core.ast.Program;
+import com.gthc.duvidosacompiler.core.DuvidosaLexer;
+import com.gthc.duvidosacompiler.core.DuvidosaParser;
+import com.gthc.duvidosacompiler.core.ast.Program;
 
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void compile() {
         try {
             DuvidosaLexer lexer;
             DuvidosaParser parser;
-            String path = "projeto_compiladores/src/io/compiler/main/input.in"; // Colocar o caminho do arquivo de entrada aqui
+            String path = "duvidosacompiler/src/main/java/com/gthc/duvidosacompiler/application/input.in"; // Colocar o caminho do arquivo de entrada aqui
 
             // Crio um analisador léxico a partir da leitura de um arquivo de entrada
             lexer = new DuvidosaLexer(CharStreams.fromFileName(path));

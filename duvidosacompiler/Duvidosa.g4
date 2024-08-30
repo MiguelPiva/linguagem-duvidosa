@@ -4,9 +4,9 @@ grammar Duvidosa;
     import java.util.ArrayList;
     import java.util.Stack;
     import java.util.HashMap;
-    import io.compiler.types.*;
-    import io.compiler.core.exceptions.*;
-    import io.compiler.core.ast.*;
+    import com.gthc.duvidosacompiler.types.*;
+    import com.gthc.duvidosacompiler.core.exceptions.*;
+    import com.gthc.duvidosacompiler.core.ast.*;
 }
 
 @members {
@@ -64,7 +64,7 @@ programa    : 'inicioprog'
             ;
 
 
-instrucoes  : ( declaravar | espr | comando | comentario )
+instrucoes  : ( declaravar | espr | comando )
             ;
 
 
@@ -210,11 +210,23 @@ cmdEnquanto : 'enquanto' {
             ;
 
 
-comentario  : '#' TEXTO '##'
+OP          : '+' | '-' | '*' | '/'
             ;
 
 
-OP          : '+' | '-' | '*' | '/'
+OP_SOMA     : '+'
+            ;
+
+
+OP_SUB      : '-'
+            ;
+
+
+OP_MULT     : '*'
+            ;
+
+
+OP_DIV      : '/'
             ;
 
 
@@ -258,7 +270,7 @@ FE_PAREN    : ')'
             ;
 
 
-TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' )* '"'
+TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' | '"' )* '"'
             ;
 
 

@@ -1,7 +1,7 @@
-package io.compiler.core.ast;
+package com.gthc.duvidosacompiler.core.ast;
 
-import io.compiler.types.Types;
-import io.compiler.types.Var;
+import com.gthc.duvidosacompiler.types.Types;
+import com.gthc.duvidosacompiler.types.Var;
 
 public class ReadCommand extends Command {
     public Var var;
