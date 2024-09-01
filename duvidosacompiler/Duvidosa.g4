@@ -9,6 +9,7 @@ grammar Duvidosa;
     import com.gthc.duvidosacompiler.core.ast.*;
 }
 
+
 @members {
     private ArrayList<Var> varList = new ArrayList<Var>();
     private HashMap<String, Var> symbolTable = new HashMap<String, Var>();
@@ -86,9 +87,9 @@ espr        : termo { strExpr += _input.LT(-1).getText(); } esprl
 
 
 termo       : ID { if (!isDeclared(_input.LT(-1).getText())) {
-                    throw new DuvidosoSemanticException("Variável não declarada: " + _input.LT(-1).getText()); }
+                    throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText()); }
                     if (!symbolTable.get(_input.LT(-1).getText()).isInitialized()) {
-                        throw new DuvidosoSemanticException("Variável não inicializada: " + _input.LT(-1).getText()); }
+                        throw new DuvidosaSemanticException("Variável não inicializada: " + _input.LT(-1).getText()); }
                     if (rightType == null) {
                         rightType = symbolTable.get(_input.LT(-1).getText()).getType();
                     } else { 
@@ -131,7 +132,7 @@ comando     : cmdAtribu
 
 
 cmdAtribu   : ID { if (!isDeclared(_input.LT(-1).getText())) {
-                    throw new DuvidosoSemanticException("Variável não declarada: " + _input.LT(-1).getText());
+                    throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText());
                     }
                     symbolTable.get(_input.LT(-1).getText()).setInitialized(true);
                     leftType = symbolTable.get(_input.LT(-1).getText()).getType();
@@ -143,7 +144,7 @@ cmdAtribu   : ID { if (!isDeclared(_input.LT(-1).getText())) {
               PVIRG
               { 
                 if (leftType.getValue() < rightType.getValue()) {
-                    throw new DuvidosoSemanticException("Tipos incompatíveis: " + leftType + " e " + rightType);
+                    throw new DuvidosaSemanticException("Tipos incompatíveis: " + leftType + " e " + rightType);
                 }
                 stack.peek().add(cmdAttrib); 
               }
@@ -153,7 +154,7 @@ cmdAtribu   : ID { if (!isDeclared(_input.LT(-1).getText())) {
 cmdLeia     : 'leia'
                 AB_PAREN
                 ID { if (!isDeclared(_input.LT(-1).getText())) {
-                        throw new DuvidosoSemanticException("Variável não declarada: " + _input.LT(-1).getText());
+                        throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText());
                     }
                     symbolTable.get(_input.LT(-1).getText()).setInitialized(true);
                     Command cmdRead = new ReadCommand(symbolTable.get(_input.LT(-1).getText()));
