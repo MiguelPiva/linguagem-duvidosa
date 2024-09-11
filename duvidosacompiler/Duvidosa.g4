@@ -73,6 +73,7 @@ declaravar  : 'declare' { currentDeclaration.clear(); }
             ( 'numero_inte' { currentType = Types.numero_inte; }
             | 'numero_flut' { currentType = Types.numero_flut; }
             | 'seq_caracteres' { currentType = Types.seq_caracteres; })
+            | 'booleano' {currentType = Types.booleano}
             DOISP
             ID { saveVar(new Var(_input.LT(-1).getText(), currentType)); }
             ( VIRG ID 
@@ -114,10 +115,19 @@ termo       : ID { if (!isDeclared(_input.LT(-1).getText())) {
                         }
                     }
                 }
+            | BOOLEANO { if (rightType == null) {
+                        rightType = Types.booleano;
+                    } else {
+                        if (rightType.getValue() < Types.seq_caracteres.getValue()) {
+                            rightType = Types.booleano;
+                        }
+                    }
+                }
             ;
 
 
-esprl       : ( OP { strExpr += _input.LT(-1).getText(); } 
+
+esprl       : ( OP { strExpr += _input.LT(-1).getText(); } | OP_LOG { strExpr += _input.LT(-1).getText(); } 
               termo { strExpr += _input.LT(-1).getText(); } 
               )*
             ;
@@ -238,6 +248,8 @@ OP_ATRIB    : ':='
 OP_REL      : '>' | '<' | '>=' | '<=' | '==' | '!='
             ;
 
+OP_LOG		: '&&' | '||' | '!'
+			;
 
 ID          : [a-z] ( [a-z] | [A-Z] | [0-9] )*
             ;
@@ -273,6 +285,9 @@ FE_PAREN    : ')'
 
 TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' | '"' )* '"'
             ;
+            
+BOOLEANO	: 'VERDADEIRO' | 'FALSO'
+			;
 
 
 EB          : ( ' ' | '\n' | '\r' | '\t' ) -> skip
