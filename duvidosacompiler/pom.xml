@@ -1,17 +1,37 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.3</version>
+		<relativePath/>
+	</parent>
 
 	<groupId>com.gthc</groupId>
 	<artifactId>duvidosacompiler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>duvidosacompiler</name>
-	<description>IDE de Linguagem Duvidosa</description>
+	<description> de Linguagem Duvidosa</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-boot.version>3.1.3</spring-boot.version> <!-- Definindo a versão do Spring Boot -->
+		<spring-boot.version>3.3.3</spring-boot.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<exec.mainClass>com.gthc.duvidosacompiler.ide.MiniIDE</exec.mainClass>
@@ -20,21 +40,18 @@
 	</properties>
 
 	<dependencies>
-		<!-- Spring Boot Web Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${spring-boot.version}</version> <!-- Usando a versão definida -->
 		</dependency>
 
 		<!-- ANTLR Runtime -->
 		<dependency>
 			<groupId>org.antlr</groupId>
-			<artifactId>antlr4-runtime</artifactId>
+			<artifactId>antlr4</artifactId>
 			<version>4.13.2</version>
 		</dependency>
 
-		<!-- JavaFX (para Ubuntu) -->
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
@@ -61,25 +78,20 @@
 			<version>0.10.9</version>
 		</dependency>
 
-		<!-- Dependência para testes -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<version>${spring-boot.version}</version> <!-- Usando a versão definida -->
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-			<!-- Plugin para Spring Boot -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring-boot.version}</version> <!-- Definindo a versão do plugin -->
 			</plugin>
 
-			<!-- Plugin para JavaFX execução -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -89,7 +101,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- Maven Compiler Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
