@@ -47,6 +47,9 @@ public class Program {
             else if (var.getType() == Types.seq_caracteres) {
                 str.append("\t\tString ");
             }
+            else if (var.getType() == Types.booleano) {
+                str.append("\t\tBooleano ");
+            }
             str.append(var.getId() + ";\n");
         }
         for (Command cmd : commandList) {

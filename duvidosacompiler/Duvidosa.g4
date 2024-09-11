@@ -73,7 +73,7 @@ declaravar  : 'declare' { currentDeclaration.clear(); }
             ( 'numero_inte' { currentType = Types.numero_inte; }
             | 'numero_flut' { currentType = Types.numero_flut; }
             | 'seq_caracteres' { currentType = Types.seq_caracteres; })
-            | 'booleano' {currentType = Types.booleano}
+            | 'booleano' {currentType = Types.booleano; }
             DOISP
             ID { saveVar(new Var(_input.LT(-1).getText(), currentType)); }
             ( VIRG ID 
@@ -82,10 +82,10 @@ declaravar  : 'declare' { currentDeclaration.clear(); }
             PVIRG
             ;
 
-
-espr        : termo { strExpr += _input.LT(-1).getText(); } esprl
+espr        : ( OP_LOG_NOT { strExpr += _input.LT(-1).getText(); } )?  // Optional OP_LOG_NOT at the beginning
+              termo { strExpr += _input.LT(-1).getText(); } 
+              esprl
             ;
-
 
 termo       : ID { if (!isDeclared(_input.LT(-1).getText())) {
                     throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText()); }
@@ -125,13 +125,13 @@ termo       : ID { if (!isDeclared(_input.LT(-1).getText())) {
                 }
             ;
 
-
-
-esprl       : ( OP { strExpr += _input.LT(-1).getText(); } | OP_LOG { strExpr += _input.LT(-1).getText(); } 
+esprl       : ( (OP { strExpr += _input.LT(-1).getText(); }
+			  | OP_REL { strExpr += _input.LT(-1).getText(); } 
+              | OP_LOG { strExpr += _input.LT(-1).getText(); } 
+              | OP_LOG_NOT { strExpr += _input.LT(-1).getText(); })? 
               termo { strExpr += _input.LT(-1).getText(); } 
               )*
             ;
-
 
 comando     : cmdAtribu
             | cmdLeia
@@ -193,7 +193,7 @@ cmdSe       : 'se' {
                     }
                 AB_PAREN 
                 espr 
-                OP_REL { strExpr += _input.LT(-1).getText(); }
+                ( OP_REL { strExpr += _input.LT(-1).getText(); } | OP_LOG { strExpr += _input.LT(-1).getText(); } )
                 espr 
                 FE_PAREN { currentIfCommand.setExpression(strExpr); }
                 'entao' 
@@ -212,7 +212,7 @@ cmdEnquanto : 'enquanto' {
                     }
                 AB_PAREN
                 espr
-                OP_REL { strExpr += _input.LT(-1).getText(); }
+                ( OP_REL { strExpr += _input.LT(-1).getText(); } | OP_LOG { strExpr += _input.LT(-1).getText(); } )
                 espr
                 FE_PAREN { currentWhileCommand.setExpression(strExpr); }
                 'execute'
@@ -248,7 +248,10 @@ OP_ATRIB    : ':='
 OP_REL      : '>' | '<' | '>=' | '<=' | '==' | '!='
             ;
 
-OP_LOG		: '&&' | '||' | '!'
+OP_LOG		: '&&' | '||'
+			;
+			
+OP_LOG_NOT  : '!'
 			;
 
 ID          : [a-z] ( [a-z] | [A-Z] | [0-9] )*
