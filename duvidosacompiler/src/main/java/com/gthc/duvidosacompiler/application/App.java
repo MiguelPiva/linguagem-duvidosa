@@ -19,7 +19,7 @@ public class App {
         try {
             DuvidosaLexer lexer;
             DuvidosaParser parser;
-            String path = "duvidosacompiler/src/main/java/com/gthc/duvidosacompiler/application/"; // Colocar o caminho do arquivo de entrada aqui
+            String path = "/home/arizona/Desktop/Project/linguagem-duvidosa/duvidosacompiler/src/main/java/com/gthc/duvidosacompiler/application/"; // Colocar o caminho do arquivo de entrada aqui
             String inputFile = "input.in";
 
             // Crio um analisador léxico a partir da leitura de um arquivo de entrada
@@ -32,7 +32,6 @@ public class App {
             parser = new DuvidosaParser(tokenStream);
 
 
-            // Utilizando as funções
             System.out.println("Iniciando compilador de linguagem Duvidosa");
             parser.programa();
             parser.showAllVars();

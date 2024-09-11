@@ -86,18 +86,23 @@ espr        : termo { strExpr += _input.LT(-1).getText(); } esprl
             ;
 
 
-termo       : ID { if (!isDeclared(_input.LT(-1).getText())) {
-                    throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText()); }
-                    if (!symbolTable.get(_input.LT(-1).getText()).isInitialized()) {
-                        throw new DuvidosaSemanticException("Variável não inicializada: " + _input.LT(-1).getText()); }
-                    if (rightType == null) {
-                        rightType = symbolTable.get(_input.LT(-1).getText()).getType();
-                    } else { 
-                        if (symbolTable.get(_input.LT(-1).getText()).getType().getValue() > rightType.getValue()) {
-                            rightType = symbolTable.get(_input.LT(-1).getText()).getType();
-                        }
+termo       : ID {
+                if (!isDeclared(_input.LT(-1).getText())) {
+                    throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText());
+                }
+                Var var = symbolTable.get(_input.LT(-1).getText());
+                var.markUsed(); // Marca a variável como usada
+                if (!var.isInitialized()) {
+                    throw new DuvidosaSemanticException("Variável não inicializada: " + _input.LT(-1).getText());
+                }
+                if (rightType == null) {
+                    rightType = var.getType();
+                } else {
+                    if (var.getType().getValue() > rightType.getValue()) {
+                        rightType = var.getType();
                     }
                 }
+            }
             | NUM { if (rightType == null) {
                         rightType = Types.numero_inte;
                     } else {
@@ -131,35 +136,42 @@ comando     : cmdAtribu
             ;
 
 
-cmdAtribu   : ID { if (!isDeclared(_input.LT(-1).getText())) {
+cmdAtribu   : ID {
+                if (!isDeclared(_input.LT(-1).getText())) {
                     throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText());
-                    }
-                    symbolTable.get(_input.LT(-1).getText()).setInitialized(true);
-                    leftType = symbolTable.get(_input.LT(-1).getText()).getType();
-                    AttributionCommand cmdAttrib = new AttributionCommand(symbolTable.get(_input.LT(-1).getText()).getId());
-                    strExpr = "";
                 }
-              OP_ATRIB 
-              espr { cmdAttrib.setContent(strExpr); }
-              PVIRG
-              { 
+                Var var = symbolTable.get(_input.LT(-1).getText());
+                var.setInitialized(true);
+                var.markUsed(); // Marca a variável como usada
+                leftType = var.getType();
+                AttributionCommand cmdAttrib = new AttributionCommand(var.getId());
+                strExpr = "";
+              }
+              OP_ATRIB
+              espr {
+                cmdAttrib.setContent(strExpr);
+              }
+              PVIRG {
                 if (leftType.getValue() < rightType.getValue()) {
                     throw new DuvidosaSemanticException("Tipos incompatíveis: " + leftType + " e " + rightType);
                 }
-                stack.peek().add(cmdAttrib); 
+                stack.peek().add(cmdAttrib);
               }
             ;
             
 
 cmdLeia     : 'leia'
                 AB_PAREN
-                ID { if (!isDeclared(_input.LT(-1).getText())) {
+                ID {
+                    if (!isDeclared(_input.LT(-1).getText())) {
                         throw new DuvidosaSemanticException("Variável não declarada: " + _input.LT(-1).getText());
                     }
-                    symbolTable.get(_input.LT(-1).getText()).setInitialized(true);
-                    Command cmdRead = new ReadCommand(symbolTable.get(_input.LT(-1).getText()));
+                    Var var = symbolTable.get(_input.LT(-1).getText());
+                    var.setInitialized(true);
+                    var.markUsed(); // Marca a variável como usada
+                    Command cmdRead = new ReadCommand(var);
                     stack.peek().add(cmdRead);
-                } 
+                }
                 FE_PAREN
                 PVIRG
             ;
