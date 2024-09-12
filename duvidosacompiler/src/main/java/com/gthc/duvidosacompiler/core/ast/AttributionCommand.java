@@ -54,4 +54,15 @@ public class AttributionCommand extends Command {
         str.append(this.getVarName() + " = " + this.getContent() + ";\n");
         return str.toString();
     }
+    
+    @Override
+    public String generateTargetC() {
+        StringBuilder str = new StringBuilder();
+        if(this.getType() == Types.seq_caracteres) {
+            str.append(this.getVarName() + "[] = " + this.getContent() + ";\n");
+        } else {
+            str.append(this.getVarName() + " = " + this.getContent() + ";\n");        	
+        }
+        return str.toString();
+    }
 }

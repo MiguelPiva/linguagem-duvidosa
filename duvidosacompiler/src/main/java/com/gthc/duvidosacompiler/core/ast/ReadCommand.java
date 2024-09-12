@@ -53,4 +53,20 @@ public class ReadCommand extends Command {
             return "";
         }
     }
+    
+    @Override
+    public String generateTargetC() {
+        if (var.getType() == Types.numero_inte) {
+            return "scanf(\"%ld\", &" + var.getId() + " );\n";
+        }
+        else if (var.getType() == Types.numero_flut) {
+            return "scanf(\"%lf\", &" + var.getId() + " );\n";
+        }
+        else if (var.getType() == Types.seq_caracteres) {
+            return "scanf(\"%s\", " + var.getId() + " );\n";
+        }
+        else {
+            return "";
+        }
+    }
 }

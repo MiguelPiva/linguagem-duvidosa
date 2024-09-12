@@ -53,5 +53,14 @@ public class WhileCommand extends Command {
         return str.toString();
     }
 
-    
+    @Override
+    public String generateTargetC() {
+        StringBuilder str = new StringBuilder();
+        str.append("while (" + expression + ") {\n");
+        for (Command cmd : commandList) {
+            str.append("\t\t\t" + cmd.generateTargetC());
+        }
+        str.append("\t\t}\n");
+        return str.toString();
+    }    
 }

@@ -113,4 +113,44 @@ public class Program {
         return str.toString();
     }
 
+    
+    public String generateTargetC() {
+        StringBuilder str = new StringBuilder();
+        StringBuilder warnings = new StringBuilder();
+        str.append("#include <stdio.h>\n\n");
+        str.append("int main() {\n");
+
+        // Declaração de variáveis
+        for (String varId : symbolTable.keySet()) {
+            Var var = symbolTable.get(varId);
+            if (var.getType() == Types.numero_inte) {
+                str.append("\t\tint ");
+            } else if (var.getType() == Types.numero_flut) {
+                str.append("\t\tdouble ");
+            } else if (var.getType() == Types.seq_caracteres) {
+                str.append("\t\tchar " + var.getId() + "[];\n");
+            }
+            if (var.getType() != Types.seq_caracteres) {
+                str.append(var.getId() + ";\n");	
+            }
+
+            if (!var.isUsed()) {
+                warnings.append("Aviso: A variável '").append(var.getId()).append("' foi declarada, mas não está sendo utilizada.\n");
+            }
+        }
+
+        for (Command cmd : commandList) {
+            str.append("\t\t" + cmd.generateTargetC());
+        }
+
+        str.append("\t\treturn 0;\n");
+        str.append("}");
+
+        if (warnings.length() > 0) {
+            str.append("\n// Warnings:\n").append(warnings.toString());
+        }
+
+        return str.toString();
+    }
+
 }

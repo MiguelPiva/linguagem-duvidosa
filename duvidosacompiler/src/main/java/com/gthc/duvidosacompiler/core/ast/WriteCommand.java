@@ -28,4 +28,9 @@ public class WriteCommand extends Command {
     public String generateTargetCSharp() {
         return "Console.WriteLine("+content+");\n";
     }
+
+    @Override
+    public String generateTargetC() {
+        return "printf("+content+");\n";
+    }
 }
