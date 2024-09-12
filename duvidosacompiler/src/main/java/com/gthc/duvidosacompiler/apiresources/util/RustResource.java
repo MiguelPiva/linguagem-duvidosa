@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gthc.duvidosacompiler.apicompiler.JavaAPI;
+import com.gthc.duvidosacompiler.apicompiler.RustAPI;
 import com.gthc.duvidosacompiler.core.exceptions.DuvidosaSemanticException;
 
 
 @RestController
-@RequestMapping("/java")
-public class JavaResource {
+@RequestMapping("/rust")
+public class RustResource {
 
         @PostMapping()
         public ResponseEntity<String> postMethodName(@RequestBody String entity) {
             try {
-                JavaAPI compiler = new JavaAPI();
+                RustAPI compiler = new RustAPI();
                 String code = compiler.compile(entity);
                 System.out.println(code);
                 return ResponseEntity.ok().body(code);

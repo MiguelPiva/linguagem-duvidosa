@@ -16,7 +16,7 @@ espr        : termo esprl
             ;
 
 
-termo       : ID | NUM | TEXTO 
+termo       : ID | NUM | TEXTO | BOOLEANO
             ;
 
 
@@ -36,7 +36,7 @@ cmdLeia     : 'leia' AB_PAREN ID FE_PAREN PVIRG
             ;
 
 
-cmdEscreva  : 'escreva' AB_PAREN termo FE_PAREN PVIRG 
+cmdEscreva  : 'escreva' AB_PAREN ( termo | espr ) FE_PAREN PVIRG 
             ;
 
 
@@ -59,6 +59,11 @@ OP_ATRIB    : ':='
 OP_REL      : '>' | '<' | '>=' | '<=' | '==' | '!='
             ;
 
+OP_LOG		: '&&' | '||'
+			;
+			
+OP_LOG_NOT  : '!'
+			;
 
 ID          : [a-z] ( [a-z] | [A-Z] | [0-9] )*
             ;
@@ -90,9 +95,10 @@ FE_PAREN    : ')'
             ;
 
 
-TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' )* '"'
+TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' | '"' | '+' | '/' | '*' )* '"'
             ;
 
+BOOLEANO	: 'VERDADEIRO' { setText("true"); } | 'FALSO' { setText("false"); }
 
 EB          : ( ' ' | '\n' | '\r' | '\t' ) -> skip
             ;

@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### ARQUIVOS GERADOS PELO ANTLR ###
+/src/main/java/com/gthc/duvidosacompiler/core/duvidosacompiler/
