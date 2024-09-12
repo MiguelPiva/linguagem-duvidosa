@@ -1,3 +1,11 @@
 .keyword {
     -fx-fill: blue;
 }
+
+.string {
+    -fx-fill: green;
+}
+
+.number {
+    -fx-fill: purple;
+}
