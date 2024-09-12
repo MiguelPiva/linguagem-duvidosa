@@ -82,7 +82,8 @@ declaravar  : 'declare' { currentDeclaration.clear(); }
             PVIRG
             ;
 
-espr        : ( OP_LOG_NOT { strExpr += _input.LT(-1).getText(); } )?  // Optional OP_LOG_NOT at the beginning
+espr        : {rightType = null;}
+              ( OP_LOG_NOT { strExpr += _input.LT(-1).getText(); } )?  // Optional OP_LOG_NOT at the beginning
               termo { strExpr += _input.LT(-1).getText(); } 
               esprl
             ;
@@ -123,7 +124,7 @@ termo       : ID {
             | BOOLEANO { if (rightType == null) {
                         rightType = Types.booleano;
                     } else {
-                        if (rightType.getValue() < Types.seq_caracteres.getValue()) {
+                        if (rightType.getValue() < Types.booleano.getValue()) {
                             rightType = Types.booleano;
                         }
                     }

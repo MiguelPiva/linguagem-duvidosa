@@ -95,7 +95,7 @@ public class Program {
             } else if (var.getType() == Types.seq_caracteres) {
                 str.append("\t\tstring ");
             } else if (var.getType() == Types.booleano) {
-                str.append("\t\tBoolean ");
+                str.append("\t\tbool ");
             }
             str.append(var.getId() + ";\n");
 
@@ -135,6 +135,8 @@ public class Program {
                 str.append("\tlet mut " + var.getId() + ": f32;\n");
             } else if (var.getType() == Types.seq_caracteres) {
                 str.append("\tlet mut " + var.getId() + ": String;\n");
+            } else if (var.getType() == Types.booleano) {
+                str.append("\tlet mut " + var.getId() + ": bool;\n");
             }
 
             if (!var.isUsed()) {
