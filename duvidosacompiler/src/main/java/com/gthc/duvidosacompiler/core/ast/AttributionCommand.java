@@ -2,12 +2,10 @@ package com.gthc.duvidosacompiler.core.ast;
 
 import com.gthc.duvidosacompiler.types.*;
 
-
 public class AttributionCommand extends Command {
     private String varName;
     private String content;
     private Types type;
-
 
     public AttributionCommand() {
     }
@@ -60,11 +58,9 @@ public class AttributionCommand extends Command {
         StringBuilder str = new StringBuilder();
         if (this.getType() == Types.numero_inte) {
             str.append(this.getVarName() + " = (" + rustTypeTreatment(this.getContent()) + ") as i32;\n");
-        }
-        else if (this.getType() == Types.numero_flut) {
+        } else if (this.getType() == Types.numero_flut) {
             str.append(this.getVarName() + " = (" + rustTypeTreatment(this.getContent()) + ") as f32;\n");
-        }
-        else if (this.getType() == Types.seq_caracteres) {
+        } else if (this.getType() == Types.seq_caracteres) {
             str.append(this.getVarName() + " = " + this.getContent() + ";\n");
         }
         return str.toString();
@@ -101,5 +97,16 @@ public class AttributionCommand extends Command {
 
     private static boolean rustIsOperator(String str) {
         return str.matches("[+\\-*/()]");
+    }
+
+    @Override
+    public String generateTargetC() {
+        StringBuilder str = new StringBuilder();
+        if (this.getType() == Types.seq_caracteres) {
+            str.append(this.getVarName() + "[] = " + this.getContent() + ";\n");
+        } else {
+            str.append(this.getVarName() + " = " + this.getContent() + ";\n");
+        }
+        return str.toString();
     }
 }
