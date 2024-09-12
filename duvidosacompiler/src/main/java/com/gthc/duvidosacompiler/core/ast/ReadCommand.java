@@ -33,6 +33,9 @@ public class ReadCommand extends Command {
         else if (var.getType() == Types.seq_caracteres) {
             return var.getId() + " = _scTrx.nextLine();\n";
         }
+        else if (var.getType() == Types.booleano) {
+            return var.getId() + " = _scTrx.nextBoolean();\n";
+        }
         else {
             return "";
         }

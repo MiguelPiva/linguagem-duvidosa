@@ -72,8 +72,8 @@ instrucoes  : ( declaravar | espr | comando )
 declaravar  : 'declare' { currentDeclaration.clear(); }
             ( 'numero_inte' { currentType = Types.numero_inte; }
             | 'numero_flut' { currentType = Types.numero_flut; }
-            | 'seq_caracteres' { currentType = Types.seq_caracteres; })
-            | 'booleano' {currentType = Types.booleano; }
+            | 'seq_caracteres' { currentType = Types.seq_caracteres; }
+            | 'booleano' {currentType = Types.booleano; })
             DOISP
             ID { saveVar(new Var(_input.LT(-1).getText(), currentType)); }
             ( VIRG ID 
@@ -289,7 +289,7 @@ FE_PAREN    : ')'
 TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' | '"' )* '"'
             ;
             
-BOOLEANO	: 'VERDADEIRO' | 'FALSO'
+BOOLEANO	: 'VERDADEIRO' { setText("true"); } | 'FALSO' { setText("false"); }
 			;
 
 
