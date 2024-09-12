@@ -144,7 +144,7 @@ cmdAtribu   : ID {
                 var.setInitialized(true);
                 var.markUsed(); // Marca a variável como usada
                 leftType = var.getType();
-                AttributionCommand cmdAttrib = new AttributionCommand(var.getId());
+                AttributionCommand cmdAttrib = new AttributionCommand(var);
                 strExpr = "";
               }
               OP_ATRIB

@@ -10,18 +10,22 @@ public class WriteCommand extends Command {
         this.content = content;
     }
 
+    
+    public String getContent() {
+        return content;
+    }
+    
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String generateTarget() {
         return "System.out.println("+content+");\n";
     }
 
-    public String getContent() {
-        return content;
+    @Override
+    public String generateTargetCSharp() {
+        return "Console.WriteLine("+content+");\n";
     }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    
 }

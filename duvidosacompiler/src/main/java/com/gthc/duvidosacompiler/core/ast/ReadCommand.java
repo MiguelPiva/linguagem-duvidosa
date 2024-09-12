@@ -37,4 +37,20 @@ public class ReadCommand extends Command {
             return "";
         }
     }
+
+    @Override
+    public String generateTargetCSharp() {
+        if (var.getType() == Types.numero_inte) {
+            return var.getId() + " = Convert.ToInt32(Console.ReadLine());\n";
+        }
+        else if (var.getType() == Types.numero_flut) {
+            return var.getId() + " = Convert.ToDouble(Console.ReadLine());\n";
+        }
+        else if (var.getType() == Types.seq_caracteres) {
+            return var.getId() + " = Console.ReadLine();\n";
+        }
+        else {
+            return "";
+        }
+    }
 }
