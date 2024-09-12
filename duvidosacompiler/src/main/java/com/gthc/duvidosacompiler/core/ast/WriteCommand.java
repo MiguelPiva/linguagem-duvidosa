@@ -11,28 +11,32 @@ public class WriteCommand extends Command {
         this.content = content;
     }
 
-    
     public String getContent() {
         return content;
     }
-    
+
     public void setContent(String content) {
         this.content = content;
     }
 
     @Override
     public String generateTarget() {
-        return "System.out.println("+content+");\n";
+        return "System.out.println(" + content + ");\n";
     }
 
     @Override
     public String generateTargetCSharp() {
-        return "Console.WriteLine("+content+");\n";
+        return "Console.WriteLine(" + content + ");\n";
+    }
+
+    @Override
+    public String generateTargetC() {
+        return "printf(" + content + ");\n";
     }
 
     @Override
     public String generateTargetRust() {
-        return "println!(\"{}\","+rustTypeTreatment(content)+");\n";
+        return "println!(\"{}\"," + rustTypeTreatment(content) + ");\n";
     }
 
     private String rustTypeTreatment(String expression) {
