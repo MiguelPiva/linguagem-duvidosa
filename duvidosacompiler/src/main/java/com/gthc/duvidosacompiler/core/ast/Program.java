@@ -113,4 +113,40 @@ public class Program {
         return str.toString();
     }
 
+    public String generateTargetRust() {
+        StringBuilder str = new StringBuilder();
+        StringBuilder warnings = new StringBuilder();
+        str.append("use std::io;\n\n");
+        str.append("fn main() {\n");
+        str.append("\tlet mut aux = String::new();\n");
+
+        // Declaração de variáveis
+        for (String varId : symbolTable.keySet()) {
+            Var var = symbolTable.get(varId);
+            if (var.getType() == Types.numero_inte) {
+                str.append("\tlet mut " + var.getId() + ": i32;\n");
+            } else if (var.getType() == Types.numero_flut) {
+                str.append("\tlet mut " + var.getId() + ": f32;\n");
+            } else if (var.getType() == Types.seq_caracteres) {
+                str.append("\tlet mut " + var.getId() + ": String;\n");
+            }
+
+            if (!var.isUsed()) {
+                warnings.append("Aviso: A variável '").append(var.getId()).append("' foi declarada, mas não está sendo utilizada.\n");
+            }
+        }
+
+        for (Command cmd : commandList) {
+            str.append("\t" + cmd.generateTargetRust());
+        }
+
+        str.append("}");
+
+        if (warnings.length() > 0) {
+            str.append("\n// Warnings:\n").append(warnings.toString());
+        }
+
+        return str.toString();
+    }
+
 }

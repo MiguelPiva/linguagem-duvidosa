@@ -54,4 +54,52 @@ public class AttributionCommand extends Command {
         str.append(this.getVarName() + " = " + this.getContent() + ";\n");
         return str.toString();
     }
+
+    @Override
+    public String generateTargetRust() {
+        StringBuilder str = new StringBuilder();
+        if (this.getType() == Types.numero_inte) {
+            str.append(this.getVarName() + " = (" + rustTypeTreatment(this.getContent()) + ") as i32;\n");
+        }
+        else if (this.getType() == Types.numero_flut) {
+            str.append(this.getVarName() + " = (" + rustTypeTreatment(this.getContent()) + ") as f32;\n");
+        }
+        else if (this.getType() == Types.seq_caracteres) {
+            str.append(this.getVarName() + " = " + this.getContent() + ";\n");
+        }
+        return str.toString();
+    }
+
+    private String rustTypeTreatment(String expression) {
+        boolean containsFloat = expression.matches(".*\\d+\\.\\d+.*") || expression.matches(".*[a-zA-Z].*");
+        if (!containsFloat) {
+            return expression;
+        }
+        expression = expression.replaceAll("([+\\-*/()])", " $1 ");
+        String[] tokens = expression.split("\\s+");
+        StringBuilder result = new StringBuilder();
+
+        for (String token : tokens) {
+            if (rustIsNumeric(token)) {
+                if (token.matches("\\d+")) {
+                    result.append(token).append(".0 ");
+                } else {
+                    result.append(token).append(" ");
+                }
+            } else if (rustIsOperator(token)) {
+                result.append(token).append(" ");
+            } else if (!token.isEmpty()) {
+                result.append("(").append(token).append(" as f32) ");
+            }
+        }
+        return result.toString().trim();
+    }
+
+    private static boolean rustIsNumeric(String str) {
+        return str.matches("\\d+(\\.\\d+)?");
+    }
+
+    private static boolean rustIsOperator(String str) {
+        return str.matches("[+\\-*/()]");
+    }
 }

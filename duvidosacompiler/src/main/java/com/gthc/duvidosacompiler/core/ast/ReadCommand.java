@@ -53,4 +53,18 @@ public class ReadCommand extends Command {
             return "";
         }
     }
+
+    @Override
+    public String generateTargetRust() {
+        StringBuilder str = new StringBuilder();
+        str.append("io::stdin().read_line(&mut aux);\n");
+        if (var.getType() == Types.numero_inte || var.getType() == Types.numero_flut) {
+            str.append("\t" + var.getId() + " = aux.trim().parse().expect(\"Erro ao converter\");\n");
+        }
+        else if (var.getType() == Types.seq_caracteres) {
+            str.append("\t" + var.getId() + " = aux.trim().to_string();\n");
+        }
+        str.append("\taux.clear();\n");
+        return str.toString();
+    }
 }

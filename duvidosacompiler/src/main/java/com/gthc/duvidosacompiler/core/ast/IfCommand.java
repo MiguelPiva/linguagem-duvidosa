@@ -76,4 +76,22 @@ public class IfCommand extends Command {
         }
         return str.toString();
     }
+
+    @Override
+    public String generateTargetRust() {
+        StringBuilder str = new StringBuilder();
+        str.append("if "+expression+" {\n");
+        for (Command cmd : trueList) {
+            str.append("\t\t\t" + cmd.generateTargetRust());
+        }
+        str.append("\t\t} ");
+        if (!falseList.isEmpty()) {
+            str.append("else {\n");
+            for (Command cmd: falseList) {
+                str.append("\t\t\t" + cmd.generateTargetRust());
+            }
+            str.append("\t\t}\n");
+        }
+        return str.toString();
+    }
 }

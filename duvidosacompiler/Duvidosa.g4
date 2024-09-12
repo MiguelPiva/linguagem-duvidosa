@@ -178,11 +178,13 @@ cmdLeia     : 'leia'
 
 
 cmdEscreva  : 'escreva'
-                AB_PAREN 
-                termo { Command cmdWrite = new WriteCommand(_input.LT(-1).getText()); 
-                    stack.peek().add(cmdWrite);
-                }
+                AB_PAREN { strExpr = ""; }
+                ( termo { strExpr += _input.LT(-1).getText();} | espr ) 
                 FE_PAREN 
+                    {
+                    Command cmdWrite = new WriteCommand(strExpr);
+                    stack.peek().add(cmdWrite); 
+                    } 
                 PVIRG 
                 { rightType = null; }
             ;
@@ -283,7 +285,7 @@ FE_PAREN    : ')'
             ;
 
 
-TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' | '"' )* '"'
+TEXTO       : '"' ( [a-z] | [A-Z] | [0-9] | ',' | '.' | ' ' | '-' | '!' | '"' | '+' | '/' | '*' )* '"'
             ;
 
 
