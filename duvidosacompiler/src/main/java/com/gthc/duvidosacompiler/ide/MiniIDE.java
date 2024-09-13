@@ -12,7 +12,7 @@ import java.util.Collections;
 public class MiniIDE extends Application {
 
     private static final String[] KEYWORDS = new String[] {
-            "inicioprog", "fimprog", "declare", "numero_inte", "numero_flut", "seq_caracteres",
+            "inicioprog", "fimprog", "declare", "numero_inte", "numero_flut", "seq_caracteres","booleano",
             "se", "entao", "senao", "es", "enquanto", "execute", "pronto", "leia", "escreva"
     };
 
