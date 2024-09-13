@@ -41,7 +41,7 @@ public class Program {
         StringBuilder warnings = new StringBuilder();
         str.append("import java.util.Scanner;\n\n");
         str.append("public class " + name + " {\n");
-        str.append("\tpublic static void main (String[] args[]) {\n");
+        str.append("\tpublic static void main (String[] args) {\n");
         str.append("\t\tScanner _scTrx = new Scanner(System.in);\n");
 
         // Declaração de variáveis
