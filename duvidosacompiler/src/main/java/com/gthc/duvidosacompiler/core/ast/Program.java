@@ -161,8 +161,7 @@ public class Program {
     public String generateTargetC() {
         StringBuilder str = new StringBuilder();
         StringBuilder warnings = new StringBuilder();
-        str.append("#include <stdio.h>\n");
-        str.append("#include <stdbool.h>\n\n");
+        str.append("#include <stdio.h>\n\n");
         str.append("int main() {\n");
 
         // Declaração de variáveis
