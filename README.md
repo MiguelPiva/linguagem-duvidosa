@@ -15,7 +15,7 @@ A linguagem Duvidosa pode ser convertida para 4 outras linguagens, sendo elas: *
 <details>
 <summary>Exemplo API</summary>
 
-## POST localhost:8080/rust
+## POST localhost:8080/csharp
 ### Corpo da requisição
 ```
 inicioprog postman
@@ -42,11 +42,14 @@ public class postman {
 </details>
 <br>
 
-Ademais, as regras e os tokens da linguagem duvidosa podem ser visualizados sem códigos no arquivo de texto [consultaDuvidosa.txt](https://github.com/MiguelPiva/linguagem-duvidosa/blob/main/duvidosacompiler/consultaDuvidosa.txt) ou com códigos no arquivo para ANTLR [Duvidosa.g4](https://github.com/MiguelPiva/linguagem-duvidosa/blob/main/duvidosacompiler/Duvidosa.g4).
+Ademais, as regras e os tokens da linguagem duvidosa podem ser visualizados sem códigos no arquivo de texto [consultaDuvidosa.txt](https://github.com/MiguelPiva/linguagem-duvidosa/blob/main/duvidosacompiler/consultaDuvidosa.txt) ou com códigos no arquivo para ANTLR [Duvidosa.g4](https://github.com/MiguelPiva/linguagem-duvidosa/blob/main/duvidosacompiler/Duvidosa.g4). O código para gerar os arquivos do ANTLR é:
+```
+java -cp ./duvidosacompiler/antlr-4.13.2-complete.jar org.antlr.v4.Tool ./duvidosacompiler/Duvidosa.g4 -o ./duvidosacompiler/src/main/java/com/gthc/duvidosacompiler/core -package com.gthc.duvidosacompiler.core
+```
 
 <br>
 
-## Obrigatórios
+## Itens obrigatórios
 
 <div align="center">
 
@@ -66,7 +69,7 @@ Ademais, as regras e os tokens da linguagem duvidosa podem ser visualizados sem 
 </div>
 <br>
 
-## Opcionais
+## Itens opcionais
 
 <div align="center">
 
@@ -74,7 +77,7 @@ Ademais, as regras e os tokens da linguagem duvidosa podem ser visualizados sem 
 |-----|--------------------------------------------------|-------------| --- |
 | **1**   | Editor Highlight (simulando uma pequena IDE)  | 3           | X |
 | **2**   | Avaliador de expressões aritméticas              | 3           |   |
-| **3**   | Inserção de Operadores lógicos                  | 2           |   |
+| **3**   | Inserção de Operadores lógicos                  | 2           | X |
 | **4**   | Geração de várias linguagens-alvo                 | 3           | X |
 | **5**   | Uma API Rest para implementação do compilador    | 4           | X |
 | **6**   | Um Interpretador (runtime) para a linguagem     | 5           |   |
