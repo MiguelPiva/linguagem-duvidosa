@@ -62,7 +62,10 @@ public class AttributionCommand extends Command {
             str.append(this.getVarName() + " = (" + rustTypeTreatment(this.getContent()) + ") as f32;\n");
         } else if (this.getType() == Types.seq_caracteres) {
             str.append(this.getVarName() + " = " + this.getContent() + ";\n");
+        } else if (this.getType() == Types.booleano) {
+            str.append(this.getVarName() + " = " + rustTypeTreatment(this.getContent()) + ";\n");
         }
+
         return str.toString();
     }
 
@@ -71,12 +74,26 @@ public class AttributionCommand extends Command {
         if (!containsFloat) {
             return expression;
         }
-        expression = expression.replaceAll("([+\\-*/()])", " $1 ");
+
+        expression = expression.replace("||", "__OR__").replace("&&", "__AND__");
+        expression = expression.replaceAll("([+*/()<>!=\\-])", " $1 ");
+        expression = expression.replace("__OR__", " || ").replace("__AND__", " && ");  // Apenas para evitar erros
         String[] tokens = expression.split("\\s+");
         StringBuilder result = new StringBuilder();
+        boolean booleanContext = false;
 
         for (String token : tokens) {
-            if (rustIsNumeric(token)) {
+            System.out.println(token);
+            if (rustIsBoolean(token)) {
+                result.append(token).append(" ");
+                booleanContext = true;
+            } else if (rustIsLogicalOperator(token)) {
+                result.append(token).append(" ");
+                booleanContext = true;
+            } else if (rustIsComparisonOperator(token)) {
+                result.append(token).append(" ");
+                booleanContext = true;
+            } else if (rustIsNumeric(token)) {
                 if (token.matches("\\d+")) {
                     result.append(token).append(".0 ");
                 } else {
@@ -84,8 +101,13 @@ public class AttributionCommand extends Command {
                 }
             } else if (rustIsOperator(token)) {
                 result.append(token).append(" ");
+                booleanContext = false;
             } else if (!token.isEmpty()) {
-                result.append("(").append(token).append(" as f32) ");
+                if (!booleanContext) {
+                    result.append("(").append(token).append(" as f32) ");
+                } else {
+                    result.append(token).append(" ");
+                }
             }
         }
         return result.toString().trim();
@@ -97,6 +119,18 @@ public class AttributionCommand extends Command {
 
     private static boolean rustIsOperator(String str) {
         return str.matches("[+\\-*/()]");
+    }
+
+    private boolean rustIsBoolean(String str) {
+        return str.equals("true") || str.equals("false");
+    }
+
+    private static boolean rustIsLogicalOperator(String str) {
+        return str.equals("&&") || str.equals("||");
+    }
+
+    private boolean rustIsComparisonOperator(String str) {
+        return str.matches("[<>!=]=?|==");
     }
 
     @Override

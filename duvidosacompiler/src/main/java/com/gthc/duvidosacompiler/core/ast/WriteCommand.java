@@ -1,7 +1,6 @@
 package com.gthc.duvidosacompiler.core.ast;
 
 public class WriteCommand extends Command {
-    private String id;
     private String content;
 
     public WriteCommand() {
@@ -41,6 +40,14 @@ public class WriteCommand extends Command {
 
     private String rustTypeTreatment(String expression) {
         if (expression.startsWith("\"") && expression.endsWith("\"")) {
+            return expression;
+        }
+        boolean containsOnlyLetters = expression.matches("[a-zA-Z\\s]+");
+        if (containsOnlyLetters) {
+            return expression;
+        }
+        boolean containsOnlyLettersAndLogicalOperators = expression.matches("[a-zA-Z\\s]*(\\|\\|\\s*[a-zA-Z\\s]*)+(&(\\s*[a-zA-Z\\s]*)+)?");
+        if (containsOnlyLettersAndLogicalOperators) {
             return expression;
         }
         boolean containsFloat = expression.matches(".*\\d+\\.\\d+.*") || expression.matches(".*[a-zA-Z].*");

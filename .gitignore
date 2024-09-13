@@ -8,3 +8,6 @@ duvidosacompiler/.antlr/*
 
 # Arquivos do Java
 duvidosacompiler/bin/*
+
+# Arquivo Eclipse
+.project

@@ -3,7 +3,8 @@ package com.gthc.duvidosacompiler.types;
 public enum Types {
     numero_inte(1),
     numero_flut(2),
-    seq_caracteres(3);
+    seq_caracteres(3),
+	booleano(4);
 
     private Integer value;
 
