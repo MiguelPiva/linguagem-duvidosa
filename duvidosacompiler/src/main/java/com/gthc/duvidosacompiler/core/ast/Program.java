@@ -172,7 +172,7 @@ public class Program {
             } else if (var.getType() == Types.numero_flut) {
                 str.append("\t\tdouble ");
             } else if (var.getType() == Types.seq_caracteres) {
-                str.append("\t\tchar " + var.getId() + "[];\n");
+                str.append("\t\tchar " + var.getId() + "[50];\n"); //
             } else if (var.getType() == Types.booleano) {
                 str.append("\t\tbool ");
             } 

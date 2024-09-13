@@ -193,7 +193,7 @@ cmdEscreva  : 'escreva'
                 ( termo { strExpr += _input.LT(-1).getText();} | espr ) 
                 FE_PAREN 
                     {
-                    Command cmdWrite = new WriteCommand(strExpr);
+                    Command cmdWrite = new WriteCommand(strExpr, symbolTable);
                     stack.peek().add(cmdWrite); 
                     } 
                 PVIRG 

@@ -1,13 +1,21 @@
 package com.gthc.duvidosacompiler.core.ast;
 
+import java.util.HashMap;
+
+import com.gthc.duvidosacompiler.types.Types;
+import com.gthc.duvidosacompiler.types.Var;
+
+
 public class WriteCommand extends Command {
     private String content;
+    private HashMap<String, Var> symbolTable;
 
     public WriteCommand() {
     }
 
-    public WriteCommand(String content) {
+    public WriteCommand(String content, HashMap<String, Var> symbolTable) {
         this.content = content;
+        this.symbolTable = symbolTable;
     }
 
     public String getContent() {
@@ -30,7 +38,28 @@ public class WriteCommand extends Command {
 
     @Override
     public String generateTargetC() {
-        return "printf(" + content + ");\n";
+        return "printf(" + cTypeTreatment(content) + content + ");\nprintf(\"\\n\");\n";
+    }
+
+    public String cTypeTreatment(String content) {
+        if (content.startsWith("\"") && content.endsWith("\"")) {
+            return "\"%s\", ";
+        }
+        for (String varId : symbolTable.keySet()) {
+            Var var = symbolTable.get(varId);
+            if (content.equals(var.getId())) {
+                if (var.getType() == Types.numero_inte) {
+                    return "\"%d\", ";
+                } else if (var.getType() == Types.numero_flut) {
+                    return "\"%f\", ";
+                } else if (var.getType() == Types.seq_caracteres) {
+                    return "\"%s\", ";
+                } else if (var.getType() == Types.booleano) {
+                    return "\"%d\", ";
+                }
+            }
+        }
+        return "\"%s\", ";
     }
 
     @Override
